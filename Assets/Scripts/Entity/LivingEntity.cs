@@ -10,7 +10,7 @@ public abstract class LivingEntity : MonoBehaviour
     protected virtual void Awake()
     {
         Rb = GetComponent<Rigidbody>();
-        Attributes = CreateDefaultAttributes();
+        Attributes ??= CreateDefaultAttributes();
         Health = new HealthSystem(this, Attributes);
     }
 
@@ -22,7 +22,7 @@ public abstract class LivingEntity : MonoBehaviour
         defaultAttributes.Get(AttributeType.healthRegen).SetBaseValue(0f);
         defaultAttributes.Get(AttributeType.regenSpeed).SetBaseValue(2f);
         defaultAttributes.Get(AttributeType.moveSpeed).SetBaseValue(3f);
-        defaultAttributes.Get(AttributeType.jumpForce).SetBaseValue(50f);
+        defaultAttributes.Get(AttributeType.jumpForce).SetBaseValue(70f);
         defaultAttributes.Get(AttributeType.attackDamage).SetBaseValue(1f);
         defaultAttributes.Get(AttributeType.attackSpeed).SetBaseValue(1.5f);
         defaultAttributes.Get(AttributeType.criticalChance).SetPercentValue(5f);
