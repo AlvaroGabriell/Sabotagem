@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-//[RequireComponent(typeof(Animator))]
+
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : LivingEntity
 {
     // --  Components & References ------------------------------
-    public Animator Animator {get; private set;}
     public CharacterSelector CharacterSelector {get; private set;}
     public JumpController JumpController {get; private set;}
     private PlayerInput playerInput;
@@ -20,9 +19,6 @@ public class PlayerController : LivingEntity
     // -- Movement ----------------------------------------------
     public Vector2 MoveInput {get; private set;}
     public bool IsJumping => JumpController.IsJumping;
-
-    // -- Animator ----------------------------------------------
-    //private bool isMoving = false;
     
     // ----------------------------------------------------------
 

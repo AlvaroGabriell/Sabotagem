@@ -10,19 +10,18 @@ public class EntityAttributes
     public EntityAttributes(LivingEntity owner)
     {
         Owner = owner;
-
         attributes = new Dictionary<AttributeType, ScalableAttribute>();
-
-        foreach (AttributeType type in Enum.GetValues(typeof(AttributeType)))
-        {
-            var attr = new ScalableAttribute(owner, type);
-            attributes[type] = attr;
-        }
     }
 
-    public ScalableAttribute Get(AttributeType attr)
+    public ScalableAttribute Get(AttributeType type)
     {
-        return attributes[attr];
+        if(!attributes.TryGetValue(type, out ScalableAttribute attr))
+        {
+            attr = new ScalableAttribute(Owner, type);
+            attributes[type] = attr;
+        }
+
+        return attr;
     }
 
     public Dictionary<AttributeType, ScalableAttribute> GetAttributeDictionary()

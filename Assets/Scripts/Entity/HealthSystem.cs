@@ -12,14 +12,14 @@ public class HealthSystem
     private float health; 
     public bool canDie = true, canRegen = true, isAlive = true, isInvulnerable = false;
 
-    public LivingEntity Owner { get; }
+    public LivingEntity Owner { get; private set; }
     private EntityAttributes attributes;
 
     private float regenTimer = 0f;
     
     public HealthSystem(LivingEntity owner, EntityAttributes attributes)
     {
-        this.Owner = owner;
+        Owner = owner;
         this.attributes = attributes;
         maxHealth = attributes.Get(AttributeType.maxHealth).FinalValue;
         health = maxHealth;
