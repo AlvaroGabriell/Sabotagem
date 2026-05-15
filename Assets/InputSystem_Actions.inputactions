@@ -50,6 +50,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Talk",
+                    "type": "Button",
+                    "id": "4b7f26d8-b155-47da-9db7-a15f5bdc5c2e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -314,6 +323,39 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "SwitchAnimal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d4598ca-1035-4e8a-bbe4-ce451dd07db7",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard_Left",
+                    "action": "Talk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6a7da01-acfd-4321-b4b5-37fdab03c865",
+                    "path": "<Keyboard>/OEM2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard_Right",
+                    "action": "Talk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f2c4273e-93b7-46a8-8751-eb8f3348fd37",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Talk",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

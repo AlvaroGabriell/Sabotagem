@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,12 @@ public class PlayerController : LivingEntity
     // -- Movement ----------------------------------------------
     public Vector2 MoveInput {get; private set;}
     public bool IsJumping => JumpController.IsJumping;
+
+    // -- Audio -------------------------------------------------
+    // TODO: Arrumar como o sfx é tocado
+    [SerializeField] private EventReference jumpSfx, landSfx, raccoonSound;
+    private float stepInterval = 0.5f;
+    private float stepTimer;
     
     // ----------------------------------------------------------
 
@@ -28,7 +35,7 @@ public class PlayerController : LivingEntity
         
         groundCheck = gameObject.transform.Find("GroundCheck");
         CharacterSelector = new(this);
-        JumpController = new(this);
+        JumpController = new(this, jumpSfx, landSfx);
         playerInput = GetComponent<PlayerInput>();
         //animator = GetComponent<Animator>();
 
@@ -51,11 +58,22 @@ public class PlayerController : LivingEntity
 
     void UpdateValues()
     {
-        //isMoving = MoveInput.sqrMagnitude > 0f;
+        bool isMoving = MoveInput.x != 0f;
 
-        // ---------- Animator ----------
+        // -- Animator ----------------------
         //animator.SetBool("isMoving", isMoving);
         //animator.SetFloat("moveSpeed", attributes.moveSpeed.FinalValue / 3);
+
+        // -- Audio -------------------------
+        if(isMoving && IsGrounded())
+        {
+            stepTimer -= Time.deltaTime;
+            if(stepTimer <= 0)
+            {
+                PlayFootstep(GetCurrentSurface());
+                stepTimer = stepInterval;
+            }
+        }
     }
 
     //Calcula e executa o movimento do jogador.
@@ -71,6 +89,30 @@ public class PlayerController : LivingEntity
         return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
     }
 
+    private SurfaceType GetCurrentSurface()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+        if(Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 1.5f))
+        {
+            if(hit.collider.TryGetComponent<SurfaceData>(out var surface))
+            {
+                return surface.surfaceType;
+            }
+        }
+
+        return SurfaceType.CONCRETE;
+    }
+
+    // -- Audio Helper ------------------------------------------
+    private void PlayFootstep(SurfaceType type)
+    {
+        string path = $"event:/sfx/steps/{type.ToString().ToLower()}";
+        AudioManager.Instance.PlayOneShot(path, transform.position);
+    }
+    public void PlaySfx(EventReference reference)
+    {
+        AudioManager.Instance.PlayOneShot(reference, transform.position);
+    }
 
     // -- Input System Callbacks --------------------------------
 
@@ -89,6 +131,11 @@ public class PlayerController : LivingEntity
         if (context.started) SkillHelper.HandleSkill(this);
     }
 
+    public void OnTalk(InputAction.CallbackContext context)
+    {
+        if (context.performed) AudioManager.Instance.PlayOneShot(raccoonSound, transform.position);
+    }
+
     // -- Debugging ---------------------------------------------
 
     void OnDrawGizmos()
@@ -102,5 +149,8 @@ public class PlayerController : LivingEntity
         
         Gizmos.color = IsGrounded() ? Color.green : Color.red;
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
+
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+        Debug.DrawRay(origin, Vector3.down * 1.5f, Color.red);
     }
 }
