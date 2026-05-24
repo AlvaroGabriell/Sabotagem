@@ -17,6 +17,11 @@ public class CharacterSelector
     {
         SelectedCharacter = character;
     }
+
+    public void Talk()
+    {
+        AudioManager.Instance.PlayOneShot($"{SelectedCharacter.ToString().ToLower()}Sound", owner.transform.position);
+    }
 }
 
 public enum CharacterType

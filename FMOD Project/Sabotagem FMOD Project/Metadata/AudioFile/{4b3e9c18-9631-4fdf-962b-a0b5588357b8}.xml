@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{4b3e9c18-9631-4fdf-962b-a0b5588357b8}">
+		<property name="assetPath">
+			<value>sfx/SBTG_SFX_Concrete_Steps-004.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.22709750566893425</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6fef5c11-48af-49aa-9e7b-ef67ce2b4951}</destination>
+		</relationship>
+	</object>
+</objects>

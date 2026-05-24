@@ -1,4 +1,3 @@
-using FMODUnity;
 using UnityEngine;
 
 public class JumpController
@@ -18,23 +17,16 @@ public class JumpController
     private float bufferCounter;
     private bool isRabbitJump = false;
 
-    // -- Audio ------------------------------------
-    private EventReference jumpSfx, landSfx;
-
     // -- Propriedade pública ----------------------
     public bool IsJumping => State == JumpState.Rising;
 
     public JumpController(
         PlayerController owner,
-        EventReference jumpSfx,
-        EventReference landSfx,
         float rabbitJumpMultiplier = 1.4f,
         float coyoteTime           = 0.2f,
         float jumpBufferTime       = 0.2f
     )
     {
-        this.jumpSfx = jumpSfx;
-        this.landSfx = landSfx;
         this.owner                = owner;
         this.rabbitJumpMultiplier = rabbitJumpMultiplier;
         this.coyoteTime           = coyoteTime;
@@ -105,7 +97,8 @@ public class JumpController
             case JumpState.Falling:
                 if (grounded)
                 {
-                    if(!landSfx.IsNull) owner.PlaySfx(landSfx);
+                    owner.GetCurrentSurface(out SurfaceData surfaceData);
+                    if(AudioManager.Instance.HasSound($"{surfaceData.surfaceType}Landing")) owner.PlaySfxFromPlayer($"{surfaceData.surfaceType}Landing");
                     State = JumpState.Grounded;
                 }
                 break;
@@ -143,6 +136,6 @@ public class JumpController
         owner.Rb.linearVelocity = new Vector3(owner.Rb.linearVelocity.x, 0f, owner.Rb.linearVelocity.z);
         owner.Rb.AddForce(Vector3.up * force, ForceMode.Impulse);
 
-        if(!jumpSfx.IsNull) owner.PlaySfx(jumpSfx);
+        if(AudioManager.Instance.HasSound("jump")) owner.PlaySfxFromPlayer("jump");
     }
 }

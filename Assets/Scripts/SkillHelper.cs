@@ -5,7 +5,7 @@ public class SkillHelper
         switch (player.CharacterSelector.SelectedCharacter)
         {
             case CharacterType.Capybara:
-                // Inútil
+                // Gorda
                 break;
 
             case CharacterType.Rabbit:

@@ -1,10 +1,14 @@
-using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody))]
-
 [RequireComponent(typeof(PlayerInput))]
+
+/// <summary>
+/// Script principal do player.
+/// Todos os componentes do player são instanciados através desse script, portanto outros scripts
+/// que quiserem referenciar tais componentes podem acessá-los por esse script.
+/// </summary>
 public class PlayerController : LivingEntity
 {
     // --  Components & References ------------------------------
@@ -22,8 +26,6 @@ public class PlayerController : LivingEntity
     public bool IsJumping => JumpController.IsJumping;
 
     // -- Audio -------------------------------------------------
-    // TODO: Arrumar como o sfx é tocado
-    [SerializeField] private EventReference jumpSfx, landSfx, raccoonSound;
     private float stepInterval = 0.5f;
     private float stepTimer;
     
@@ -35,7 +37,7 @@ public class PlayerController : LivingEntity
         
         groundCheck = gameObject.transform.Find("GroundCheck");
         CharacterSelector = new(this);
-        JumpController = new(this, jumpSfx, landSfx);
+        JumpController = new(this);
         playerInput = GetComponent<PlayerInput>();
         //animator = GetComponent<Animator>();
 
@@ -70,7 +72,8 @@ public class PlayerController : LivingEntity
             stepTimer -= Time.deltaTime;
             if(stepTimer <= 0)
             {
-                PlayFootstep(GetCurrentSurface());
+                GetCurrentSurface(out SurfaceData surfaceData);
+                PlayFootstep(surfaceData.surfaceType);
                 stepTimer = stepInterval;
             }
         }
@@ -89,29 +92,32 @@ public class PlayerController : LivingEntity
         return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
     }
 
-    private SurfaceType GetCurrentSurface()
+    /// <summary>
+    /// Retorna se o player está pisando em alguma superfície e o tipo da superfície que ele está pisando.
+    /// </summary>
+    /// <param name="surfaceData">O tipo da superfície.</param>
+    /// <returns>Retorna <c>true</c> se o player está pisando em uma superfície e <c>false</c> se não estiver pisando em superfície nenhuma.</returns>
+    public bool GetCurrentSurface(out SurfaceData surfaceData)
     {
         Vector3 origin = transform.position + Vector3.up * 0.2f;
-        if(Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 1.5f))
+        if(IsGrounded() && Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 0.35f))
         {
-            if(hit.collider.TryGetComponent<SurfaceData>(out var surface))
-            {
-                return surface.surfaceType;
-            }
+            if(hit.collider.TryGetComponent(out surfaceData)) return true;
         }
 
-        return SurfaceType.CONCRETE;
+        surfaceData = default;
+        return false;
     }
 
     // -- Audio Helper ------------------------------------------
     private void PlayFootstep(SurfaceType type)
     {
-        string path = $"event:/sfx/steps/{type.ToString().ToLower()}";
-        AudioManager.Instance.PlayOneShot(path, transform.position);
+        AudioManager.Instance.PlayOneShot($"{type.ToString().ToLower()}Steps", transform.position);
     }
-    public void PlaySfx(EventReference reference)
+
+    public void PlaySfxFromPlayer(string key)
     {
-        AudioManager.Instance.PlayOneShot(reference, transform.position);
+        AudioManager.Instance.PlayOneShot(key, transform.position);
     }
 
     // -- Input System Callbacks --------------------------------
@@ -133,7 +139,7 @@ public class PlayerController : LivingEntity
 
     public void OnTalk(InputAction.CallbackContext context)
     {
-        if (context.performed) AudioManager.Instance.PlayOneShot(raccoonSound, transform.position);
+        if (context.performed) CharacterSelector.Talk();
     }
 
     // -- Debugging ---------------------------------------------
@@ -151,6 +157,6 @@ public class PlayerController : LivingEntity
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
 
         Vector3 origin = transform.position + Vector3.up * 0.2f;
-        Debug.DrawRay(origin, Vector3.down * 1.5f, Color.red);
+        Debug.DrawRay(origin, Vector3.down * 0.35f, Color.red);
     }
 }

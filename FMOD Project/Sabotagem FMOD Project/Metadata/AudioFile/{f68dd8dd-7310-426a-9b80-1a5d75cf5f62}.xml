@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f68dd8dd-7310-426a-9b80-1a5d75cf5f62}">
+		<property name="assetPath">
+			<value>sfx/SBTG_SFX_Duct_Steps-006.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.10655328798185941</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{6fef5c11-48af-49aa-9e7b-ef67ce2b4951}</destination>
+		</relationship>
+	</object>
+</objects>

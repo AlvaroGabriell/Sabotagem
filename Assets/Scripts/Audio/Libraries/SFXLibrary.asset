@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edd8bda2f0ad55c47b171311626177c0, type: 3}
+  m_Name: SFXLibrary
+  m_EditorClassIdentifier: Assembly-CSharp::SFXLibrary
+  sounds:
+  - key: concreteSteps
+    reference:
+      Guid:
+        Data1: 15721267
+        Data2: 1183221642
+        Data3: -1986020724
+        Data4: 1631654429
+      Path: event:/sfx/steps/concrete
+  - key: ductSteps
+    reference:
+      Guid:
+        Data1: -67849174
+        Data2: 1190438672
+        Data3: 1013884581
+        Data4: 389150582
+      Path: event:/sfx/steps/duct
+  - key: metalSteps
+    reference:
+      Guid:
+        Data1: -1438360449
+        Data2: 1249589569
+        Data3: 1492410540
+        Data4: 178140898
+      Path: event:/sfx/steps/metal
+  - key: raccoonSound
+    reference:
+      Guid:
+        Data1: -436946033
+        Data2: 1212497145
+        Data3: 76590765
+        Data4: -1614969819
+      Path: "event:/sfx/missel\xE2nea/cuaxinim"
+  - key: buttonClick
+    reference:
+      Guid:
+        Data1: 1595312760
+        Data2: 1238914178
+        Data3: -1777822592
+        Data4: 115443282
+      Path: event:/sfx/menu/click
+  - key: buttonHover
+    reference:
+      Guid:
+        Data1: 283600922
+        Data2: 1243668584
+        Data3: -1566006886
+        Data4: 1130286184
+      Path: event:/sfx/menu/select
+  - key: jump
+    reference:
+      Guid:
+        Data1: 996848571
+        Data2: 1309972254
+        Data3: -956069468
+        Data4: 216792690
+      Path: event:/sfx/jump action/jump
+  - key: metalLanding
+    reference:
+      Guid:
+        Data1: -1146942042
+        Data2: 1247157833
+        Data3: -734250068
+        Data4: 1718339922
+      Path: event:/sfx/jump action/land/metal
+  - key: concreteLanding
+    reference:
+      Guid:
+        Data1: -1192317988
+        Data2: 1107884431
+        Data3: 499197057
+        Data4: 408522310
+      Path: event:/sfx/jump action/land/concrete
