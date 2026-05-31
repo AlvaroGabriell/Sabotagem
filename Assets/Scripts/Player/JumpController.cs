@@ -38,10 +38,10 @@ public class JumpController
     /// <summary>
     /// Chame em Update, antes de TryJump.
     /// </summary>
-    public void Tick(float deltaTime, bool grounded)
+    public void Tick(float deltaTime, bool isOnJumpable)
     {
         TickCounters(deltaTime);
-        UpdateState(grounded);
+        UpdateState(isOnJumpable);
     }
 
     ///<summary>
@@ -49,15 +49,7 @@ public class JumpController
     /// </summary>
     public void TryJump()
     {
-        // Quando está no chão, o coyoteCounter é sempre resetado para coyoteTime
-        // E quando o botão de pulo é pressionado, o bufferCounter é resetado para jumpBufferTime
-        // Então, quando o jogador aperta o botão de pulo estando no chão, ambos os valores
-        // estão no máximo fazendo o pulo acontecer imediatamente. E se o jogador apertar o botão
-        // um pouco antes de chegar no chão, o buffer garante que o pulo aconteça assim que ele tocar o chão.
-        bool canJump  = coyoteCounter > 0f;
-        bool buffered = bufferCounter > 0f;
-
-        if (!canJump || !buffered) return;
+        if (!CanJump()) return;
         ExecuteJump();
     }
 
@@ -78,14 +70,27 @@ public class JumpController
         isRabbitJump = true;
     }
 
+    public bool CanJump()
+    {
+        // Quando está no chão, o coyoteCounter é sempre resetado para coyoteTime
+        // E quando o botão de pulo é pressionado, o bufferCounter é resetado para jumpBufferTime
+        // Então, quando o jogador aperta o botão de pulo estando no chão, ambos os valores
+        // estão no máximo fazendo o pulo acontecer imediatamente. E se o jogador apertar o botão
+        // um pouco antes de chegar no chão, o buffer garante que o pulo aconteça assim que ele tocar o chão.
+        bool canJump  = coyoteCounter > 0f;
+        bool buffered = bufferCounter > 0f;
+
+        return canJump && buffered;
+    }
+
     // -- Privados ---------------------------------
 
-    private void UpdateState(bool grounded)
+    private void UpdateState(bool isOnJumpable)
     {
         switch (State)
         {
             case JumpState.Grounded:
-                if (!grounded)
+                if (!isOnJumpable)
                     State = JumpState.Falling; // Se estava no chão e saiu, é porque provavelmente caiu de uma plataforma
                 break;
 
@@ -95,10 +100,10 @@ public class JumpController
                 break;
 
             case JumpState.Falling:
-                if (grounded)
+                if (isOnJumpable)
                 {
-                    owner.GetCurrentSurface(out SurfaceData surfaceData);
-                    if(AudioManager.Instance.HasSound($"{surfaceData.surfaceType}Landing")) owner.PlaySfxFromPlayer($"{surfaceData.surfaceType}Landing");
+                    owner.GetCurrentSurface(out SurfaceInfo surfaceInfo);
+                    if(AudioManager.Instance.HasSound($"{surfaceInfo.surfaceType.ToString().ToLower()}Landing")) owner.PlaySfxFromPlayer($"{surfaceInfo.surfaceType.ToString().ToLower()}Landing");
                     State = JumpState.Grounded;
                 }
                 break;

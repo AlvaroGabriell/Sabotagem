@@ -13,11 +13,11 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Hitbox
+  - Player
+  - SafeZone
+  - Hazard
   - 
   - 
   - 

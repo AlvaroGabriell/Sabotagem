@@ -7,17 +7,19 @@ using System.Collections.Generic;
 public class FMODAudioLibrary : ScriptableObject
 {
     public List<SoundEntry> sounds;
-    private Dictionary<string, EventReference> _cachedEntries;
+    
+    private Dictionary<string, EventReference> cache;
 
     public bool TryGet(string key, out EventReference reference)
     {
-        if(_cachedEntries == null)
+        if(cache == null)
         {
-            _cachedEntries = new Dictionary<string, EventReference>();
-            foreach(var entry in sounds) _cachedEntries[entry.key] = entry.reference;
+            cache = new();
+
+            foreach(var entry in sounds) cache[entry.key] = entry.reference;
         }
 
-        return _cachedEntries.TryGetValue(key, out reference);
+        return cache.TryGetValue(key, out reference);
     }
 }
 

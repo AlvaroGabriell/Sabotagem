@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public abstract class LivingEntity : MonoBehaviour
+public abstract class LivingEntity : MonoBehaviour, IDamageable
 {
     public Rigidbody Rb { get; private set; }
     public EntityAttributes Attributes { get; private set; }
@@ -36,5 +36,10 @@ public abstract class LivingEntity : MonoBehaviour
     public void ApplyKnockback(Vector3 force)
     {
         Rb.AddForce(force, ForceMode.Impulse);
+    }
+
+    public void TakeDamage(IDamageSource source, LivingEntity pAttacker = null)
+    {
+        Health.TakeDamage(source.GetDamage(), source.GetDamageSource(), pAttacker);
     }
 }
