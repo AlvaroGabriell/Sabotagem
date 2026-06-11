@@ -99,11 +99,12 @@ fmod_editor.log
 # ==========================================
 
 # Ignora pastas de cache e arquivos temporários de edição
-.fmod/
-.unsaved/
-.user/
+FMOD Project/Sabotagem FMOD Project/.cache/
+FMOD Project/Sabotagem FMOD Project/.restore/
+FMOD Project/Sabotagem FMOD Project/.user/
+FMOD Project/Sabotagem FMOD Project/.unsaved/
 
 # Ignora os arquivos de trava (impede conflitos de uso simultâneo)
 *.fspro.user
-*.fspro.lock
+FMOD Project/Sabotagem FMOD Project/*.fspro.lock
 *.log
