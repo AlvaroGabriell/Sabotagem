@@ -35,8 +35,8 @@ public class ScalableAttribute
     public LivingEntity Owner { get; }
     public AttributeType Type { get; }
 
-    public float baseValue = 1;
-    public float modifier = 1f; // 1 = 100%
+    private float baseValue = 1;
+    private float modifier = 1f; // 1 = 100%
 
     public float FinalValue => baseValue * modifier;
 

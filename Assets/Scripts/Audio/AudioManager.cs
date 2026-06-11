@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     // Biblioteca centralizada pra facilitar a programação... Sim, é uma gambiarra, eu sei
     private FMODAudioLibrary[] allLibs;
 
+    // -- FMOD VCAs ---------------------------------------------
+    [SerializeField] private string musicVCAPath = "vca:/Music_VCA", sfxVCAPath = "vca:/SFX_VCA", masterVCAPath = "vca:/Master_VCA";
+    private VCA masterVCA, musicVCA, sfxVCA;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,6 +23,10 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             allLibs = new[] { sfxLib, musicLib, ambienceLib };
             DontDestroyOnLoad(gameObject);
+
+            masterVCA = RuntimeManager.GetVCA(masterVCAPath);
+            musicVCA = RuntimeManager.GetVCA(musicVCAPath);
+            sfxVCA = RuntimeManager.GetVCA(sfxVCAPath);
 
             PlayOneShot("fans", Vector3.zero);
             PlayOneShot("beep", Vector3.zero);
@@ -30,6 +38,37 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Start()
+    {
+        float masterVolume = PlayerPrefs.GetFloat("masterVolume", 1f);
+        float musicVolume = PlayerPrefs.GetFloat("musicVolume", 1f);
+        float sfxVolume = PlayerPrefs.GetFloat("sfxVolume", 1f);
+
+        SetMasterVolume(masterVolume);
+        SetMusicVolume(musicVolume);
+        SetSFXVolume(sfxVolume);
+    }
+
+    // -- Volume ---------------------------------------------
+
+    public void SetMasterVolume(float volume)
+    {
+        masterVCA.setVolume(volume);
+        PlayerPrefs.SetFloat("masterVolume", volume);
+    }
+    public void SetMusicVolume(float volume)
+    {
+        musicVCA.setVolume(volume);
+        PlayerPrefs.SetFloat("musicVolume", volume);
+    }
+    public void SetSFXVolume(float volume)
+    {
+        sfxVCA.setVolume(volume);
+        PlayerPrefs.SetFloat("sfxVolume", volume);
+    }
+
+    // -- Library ---------------------------------------------
 
     public bool HasSound(string key)
     {
@@ -46,6 +85,8 @@ public class AudioManager : MonoBehaviour
         reference = default;
         return false;
     }
+
+    // -- Sound Player ---------------------------------------------
 
     public void PlayOneShot(string key, Vector3 pos)
     {

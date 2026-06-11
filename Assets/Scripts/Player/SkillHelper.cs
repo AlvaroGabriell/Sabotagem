@@ -21,4 +21,9 @@ public class SkillHelper
                 break;
         }
     }
+
+    public static void Talk(CharacterType type, PlayerController player)
+    {
+        AudioManager.Instance.PlayOneShot($"{type.ToString().ToLower()}Sound", player.transform.position);
+    }
 }

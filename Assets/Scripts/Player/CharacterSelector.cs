@@ -1,3 +1,5 @@
+using UnityEngine;
+
 /// <summary>
 /// Guarda o personagem selecionado do player.
 /// Esse script deve ser instanciado no PlayerControoler.
@@ -8,20 +10,47 @@ public class CharacterSelector
     public readonly PlayerController owner;
     public CharacterType SelectedCharacter {get; private set;} = CharacterType.Rabbit;
 
-    public CharacterSelector(PlayerController owner)
+    private readonly Transform modelParent;
+
+    public CharacterEntry[] characters;
+
+    public CharacterSelector(PlayerController owner, CharacterEntry[] characters)
     {
         this.owner = owner;
+        this.characters = characters;
+        modelParent = owner.transform.Find("Model");
     }
 
-    public void SetCharacter(CharacterType character)
+    public void SetCharacter(CharacterType type)
     {
-        SelectedCharacter = character;
+        SelectedCharacter = type;
+
+        GameObject prefab = GetPrefab(type);
+        if(prefab == null) return;
+
+        if (modelParent.childCount > 0){
+            Object.Destroy(modelParent.GetChild(0).gameObject);
+            ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(owner.gameObject) + new Vector3(0, 0, -0.72f));
+        }
+
+        Object.Instantiate(prefab, modelParent);
     }
 
-    public void Talk()
+    private GameObject GetPrefab(CharacterType type)
     {
-        AudioManager.Instance.PlayOneShot($"{SelectedCharacter.ToString().ToLower()}Sound", owner.transform.position);
+        foreach(var entry in characters)
+        {
+            if(entry.type == type) return entry.prefab;
+        }
+        return null;
     }
+}
+
+[System.Serializable]
+public struct CharacterEntry
+{
+    public CharacterType type;
+    public GameObject prefab;
 }
 
 public enum CharacterType

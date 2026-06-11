@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,6 +15,8 @@ public class PlayerController : LivingEntity
     public CharacterSelector CharacterSelector {get; private set;}
     public JumpController JumpController {get; private set;}
     private PlayerInput playerInput;
+    [SerializeField] private CharacterEntry[] characters;
+    [SerializeField] private CharacterWheel characterWheel;
 
     // -- Ground Check ------------------------------------------
     private Transform groundCheck;
@@ -26,7 +27,7 @@ public class PlayerController : LivingEntity
     // -- Respawn -----------------------------------------------
     public Vector3 LastSafePos {get; private set;}
     [SerializeField] private LayerMask dangerLayer;
-    private readonly Collider[] hazardHits = new Collider[16];
+    // private readonly Collider[] hazardHits = new Collider[16];
 
     // -- Movement ----------------------------------------------
     public Vector2 MoveInput {get; private set;}
@@ -46,9 +47,11 @@ public class PlayerController : LivingEntity
     override protected void Awake()
     {
         base.Awake();
+
+        Attributes.Get(AttributeType.moveSpeed).SetBaseValue(3f);
         
         groundCheck = gameObject.transform.Find("GroundCheck");
-        CharacterSelector = new(this);
+        CharacterSelector = new(this, characters);
         JumpController = new(this);
         playerInput = GetComponent<PlayerInput>();
         //animator = GetComponent<Animator>();
@@ -94,6 +97,8 @@ public class PlayerController : LivingEntity
     //Calcula e executa o movimento do jogador.
     public void HandleMovement()
     {
+        if(characterWheel.IsOpen) return;
+
         float speed = Attributes.Get(AttributeType.moveSpeed).FinalValue;
         Rb.linearVelocity = new Vector3(MoveInput.x * speed, Rb.linearVelocity.y, MoveInput.y * speed);
     }
@@ -151,7 +156,7 @@ public class PlayerController : LivingEntity
 
     public bool IsSafeFromDanger()
     {
-        return !Physics.CheckSphere(Utils.GetVisualCenter(gameObject), 1f, dangerLayer, QueryTriggerInteraction.Collide);
+        return !Physics.CheckSphere(Utils.GetVisualCenter(gameObject), 3f, dangerLayer, QueryTriggerInteraction.Collide);
     }
 
     /// <summary>
@@ -205,7 +210,22 @@ public class PlayerController : LivingEntity
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started) JumpController.OnJumpPressed();
+        if (context.started && !characterWheel.IsOpen) JumpController.OnJumpPressed();
+    }
+
+    //public void OnCrouch(InputAction.CallbackContext context)
+    //{
+    //    
+    //}
+
+    public void OnSwitchAnimal(InputAction.CallbackContext context)
+    {
+        if (context.started) characterWheel.Toggle();
+    }
+
+    public void OnWheelNavigate(InputAction.CallbackContext context)
+    {
+        characterWheel.OnDirectionInput(context.ReadValue<Vector2>());
     }
 
     public void OnSkill(InputAction.CallbackContext context)
@@ -215,7 +235,7 @@ public class PlayerController : LivingEntity
 
     public void OnTalk(InputAction.CallbackContext context)
     {
-        if (context.performed) CharacterSelector.Talk();
+        if (context.started) SkillHelper.Talk(CharacterSelector.SelectedCharacter, this);
     }
 
     // -- Debugging ---------------------------------------------
@@ -240,7 +260,7 @@ public class PlayerController : LivingEntity
 
         // Danger Safety Check
         Gizmos.color = IsSafeFromDanger() ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(Utils.GetVisualCenter(gameObject), 1f);
+        Gizmos.DrawWireSphere(Utils.GetVisualCenter(gameObject), 3f);
 
         // HasEnoughGround debug
         float radius = 0.3f;

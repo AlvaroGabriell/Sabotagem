@@ -10,7 +10,21 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
     private LineRenderer lineRenderer;
     private CapsuleCollider capsuleCollider;
 
-    private Vector3 lastDirection;
+    private Vector3 lastDir, lastPos, lastEndPoint;
+    private float checkInterval = 0.05f; // 20x por segundo
+    private float checkTimer = 0f;
+
+    private bool _active = true;
+    public bool Active
+    {
+        get => _active;
+        set
+        {
+            _active = value;
+            lineRenderer.enabled = value;
+            capsuleCollider.enabled = value;
+        }
+    }
 
     void Awake()
     {
@@ -20,22 +34,34 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
 
     void Update()
     {
-        if(transform.parent.forward != lastDirection)
+        if (!_active) return;
+
+        checkTimer -= Time.deltaTime;
+        if (checkTimer > 0f) return;
+        checkTimer = checkInterval;
+
+        Vector3 currentPos = transform.position;
+        Vector3 currentDir = transform.parent.forward;
+        
+        // Checa hit atual pra ver se algo passou na frente do laser
+        Vector3 start = currentPos;
+        Vector3 direction = currentDir;
+        Vector3 currentEndPoint;
+
+        if(Physics.Raycast(start, direction, out RaycastHit hit, maxDistance, hitMask)) currentEndPoint = hit.point;
+        else currentEndPoint = start + direction * maxDistance;
+
+        if(currentDir != lastDir || currentPos != lastPos || currentEndPoint != lastEndPoint)
         {
-            lastDirection = transform.parent.forward;
-            FireLaser();
+            lastDir = currentDir;
+            lastPos = currentPos;
+            lastEndPoint = currentEndPoint;
+            FireLaser(start, currentEndPoint);
         }
     }
 
-    private void FireLaser()
+    private void FireLaser(Vector3 start, Vector3 end)
     {
-        Vector3 start = transform.position;
-        Vector3 direction = transform.parent.forward;
-        Vector3 end;
-
-        if (Physics.Raycast(start, direction, out RaycastHit hit, maxDistance, hitMask)) end = hit.point;
-        else end = start + direction * maxDistance;
-
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
         UpdateCollider(start, end);
@@ -54,17 +80,12 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
         transform.LookAt(end);
     }
 
-    public float GetDamage()
-    {
-        return 1;
-    }
-    public DamageSource GetDamageSource()
-    {
-        return DamageSource.ENVIRONMENT;
-    }
+    public float GetDamage() => 1;
+    public DamageSource GetDamageSource() => DamageSource.ENVIRONMENT;
 
     void OnTriggerEnter(Collider other)
     {
+        if(!_active) return;
         if(other.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.TakeDamage(this);
