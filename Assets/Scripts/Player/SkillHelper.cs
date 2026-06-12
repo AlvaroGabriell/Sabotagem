@@ -2,7 +2,7 @@ public class SkillHelper
 {
     public static void HandleSkill(PlayerController player)
     {
-        switch (player.CharacterSelector.SelectedCharacter)
+        switch (player.CharacterSelector.SelectedCharacter.type)
         {
             case CharacterType.Capybara:
                 // Gorda
@@ -22,8 +22,8 @@ public class SkillHelper
         }
     }
 
-    public static void Talk(CharacterType type, PlayerController player)
+    public static void Talk(CharacterEntry characterEntry, PlayerController player)
     {
-        AudioManager.Instance.PlayOneShot($"{type.ToString().ToLower()}Sound", player.transform.position);
+        AudioManager.Instance.PlayOneShot(characterEntry.voiceSound, player.transform.position);
     }
 }

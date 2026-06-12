@@ -39,7 +39,7 @@ public class UIController : MonoBehaviour
         GlobalVolume.Instance.EnableDOF();
         menuStack.Push(menu);
 
-        bool noLevel = GameController.Instance.LoadedLevel == default;
+        bool noLevel = GameController.Instance.LoadedLevel == null;
         bool isOverlayMenu = menu == configMenu || menu == soundMenu || menu == creditsMenu;
         
         if (noLevel && isOverlayMenu) background.SetActive(true);

@@ -103,7 +103,7 @@ public class JumpController
                 if (isOnJumpable)
                 {
                     owner.GetCurrentSurface(out SurfaceInfo surfaceInfo);
-                    if(AudioManager.Instance.HasSound($"{surfaceInfo.surfaceType.ToString().ToLower()}Landing")) owner.PlaySfxFromPlayer($"{surfaceInfo.surfaceType.ToString().ToLower()}Landing");
+                    owner.PlaySfxFromPlayer(surfaceInfo.landingSound);
                     State = JumpState.Grounded;
                 }
                 break;
@@ -141,6 +141,6 @@ public class JumpController
         owner.Rb.linearVelocity = new Vector3(owner.Rb.linearVelocity.x, 0f, owner.Rb.linearVelocity.z);
         owner.Rb.AddForce(Vector3.up * force, ForceMode.Impulse);
 
-        if(AudioManager.Instance.HasSound("jump")) owner.PlaySfxFromPlayer("jump");
+        owner.PlaySfxFromPlayer(AudioEvents.SFX.JumpAction.Jump);
     }
 }

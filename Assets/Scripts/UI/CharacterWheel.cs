@@ -27,7 +27,7 @@ public class CharacterWheel : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(false);
-        hoveredType = player.CharacterSelector.SelectedCharacter;
+        hoveredType = player.CharacterSelector.SelectedCharacter.type;
     }
 
     public void Toggle()
@@ -37,11 +37,11 @@ public class CharacterWheel : MonoBehaviour
 
         if (IsOpen)
         {
-            hoveredType = player.CharacterSelector.SelectedCharacter;
+            hoveredType = player.CharacterSelector.SelectedCharacter.type;
             UpdateHighlight();
         } else
         {
-            if(hoveredType != player.CharacterSelector.SelectedCharacter) ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(player.gameObject) + new Vector3(0, 0, -0.72f));
+            if(hoveredType != player.CharacterSelector.SelectedCharacter.type) ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(player.gameObject) + new Vector3(0, 0, -0.72f));
             player.CharacterSelector.SetCharacter(hoveredType);
         }
     }

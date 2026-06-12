@@ -88,7 +88,7 @@ public class PlayerController : LivingEntity
             if(stepTimer <= 0)
             {
                 GetCurrentSurface(out SurfaceInfo surfaceInfo);
-                PlayFootstep(surfaceInfo.surfaceType);
+                PlayFootstep(surfaceInfo);
                 stepTimer = stepInterval;
             }
         }
@@ -191,14 +191,14 @@ public class PlayerController : LivingEntity
     }
 
     // -- Audio Helper ------------------------------------------
-    private void PlayFootstep(SurfaceType type)
+    private void PlayFootstep(SurfaceInfo info)
     {
-        AudioManager.Instance.PlayOneShot($"{type.ToString().ToLower()}Steps", transform.position);
+        AudioManager.Instance.PlayOneShot(info.footstepSound, transform.position);
     }
 
-    public void PlaySfxFromPlayer(string key)
+    public void PlaySfxFromPlayer(string eventPath)
     {
-        AudioManager.Instance.PlayOneShot(key, transform.position);
+        AudioManager.Instance.PlayOneShot(eventPath, transform.position);
     }
 
     // -- Input System Callbacks --------------------------------
