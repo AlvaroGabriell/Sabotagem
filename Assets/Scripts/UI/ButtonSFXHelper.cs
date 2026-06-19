@@ -7,9 +7,4 @@ public class UIButtonHover : MonoBehaviour, IPointerEnterHandler
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Select, Vector3.zero);
     }
-
-    public void OnClick()
-    {
-        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
-    }
 }

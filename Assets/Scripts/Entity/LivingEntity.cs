@@ -6,12 +6,14 @@ public abstract class LivingEntity : MonoBehaviour, IDamageable
     public Rigidbody Rb { get; private set; }
     public EntityAttributes Attributes { get; private set; }
     public HealthSystem Health { get; private set; }
+    public ModelVisualEffects visualEffects { get; private set; }
 
     protected virtual void Awake()
     {
         Rb = GetComponent<Rigidbody>();
         Attributes ??= CreateDefaultAttributes();
         Health = new HealthSystem(this, Attributes);
+        visualEffects = new ModelVisualEffects(this);
     }
 
     private EntityAttributes CreateDefaultAttributes()

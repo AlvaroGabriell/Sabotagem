@@ -10,8 +10,8 @@ public class SurfaceData : MonoBehaviour, IJumpableSurface
 public struct SurfaceInfo
 {
     public SurfaceType surfaceType;
-    public string footstepSound;
-    public string landingSound;
+    [FMODAudioEvent] public string footstepSound;
+    [FMODAudioEvent] public string landingSound;
     public bool isUnstable;
 
     public static SurfaceInfo Default => new()

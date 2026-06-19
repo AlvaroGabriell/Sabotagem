@@ -35,6 +35,7 @@ public class LevelBootstrap : MonoBehaviour
     
     void OnDestroy()
     {
+        UIController.Instance.UICamera.SetActive(true);
         instancedAmbSounds.ForEach(instance => instance.stop(STOP_MODE.IMMEDIATE));
         instancedAmbSounds.Clear();
     }

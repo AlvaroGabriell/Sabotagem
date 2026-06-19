@@ -17,7 +17,7 @@ public class SkillHelper
                 break;
 
             case CharacterType.Chameleon:
-
+                player.SetCamouflaged(!player.IsCamouflaged);
                 break;
         }
     }

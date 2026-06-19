@@ -138,6 +138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceData
   surfaceInfo:
     surfaceType: 0
+    footstepSound: event:/sfx/steps/concrete
+    landingSound: event:/sfx/jump action/land/concrete
     isUnstable: 0
 --- !u!65 &86133000
 BoxCollider:
@@ -171,7 +173,7 @@ GameObject:
   - component: {fileID: 190891660}
   - component: {fileID: 190891662}
   - component: {fileID: 190891661}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Chameleon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -209,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -710,7 +712,7 @@ Transform:
   m_GameObject: {fileID: 600866811}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.79, y: -0.55, z: 0}
+  m_LocalPosition: {x: -2.33, y: -0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -884,6 +886,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 26510162-07dc-4a61-9359-dab2104495ff
     m_ActionName: 'Player/WheelNavigate[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88e52c1a-90d6-49d4-80c2-41cbf7c7b239
+    m_ActionName: 'UI/Escape[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Keyboard_Left
   m_DefaultActionMap: Player
@@ -931,12 +937,16 @@ MonoBehaviour:
   characters:
   - type: 1
     prefab: {fileID: 919132149155446097, guid: 10685e4dc9ea95c4db7a587f83a082f6, type: 3}
+    voiceSound: 
   - type: 0
     prefab: {fileID: 919132149155446097, guid: a51b6d2f502ed324f85b328fe1a05386, type: 3}
+    voiceSound: 
   - type: 3
     prefab: {fileID: 919132149155446097, guid: 70bdeeb26c9cc464e9bb9b99edae5c98, type: 3}
+    voiceSound: 
   - type: 2
     prefab: {fileID: 919132149155446097, guid: 29331f698d4efbe4b9f200f3d6811b59, type: 3}
+    voiceSound: "event:/sfx/missel\xE2nea/cuaxinim"
   characterWheel: {fileID: 2042427815}
   groundLayer:
     serializedVersion: 2
@@ -1059,7 +1069,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceData
   surfaceInfo:
-    surfaceType: 0
+    surfaceType: 1
+    footstepSound: event:/sfx/steps/metal
+    landingSound: event:/sfx/jump action/land/metal
     isUnstable: 0
 --- !u!1 &796456077
 GameObject:
@@ -1138,7 +1150,7 @@ GameObject:
   - component: {fileID: 879183781}
   - component: {fileID: 879183783}
   - component: {fileID: 879183782}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1176,7 +1188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1356,7 +1368,7 @@ GameObject:
   - component: {fileID: 983698090}
   - component: {fileID: 983698092}
   - component: {fileID: 983698091}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Raccoon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1394,7 +1406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1486,7 +1498,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SurfaceData
   surfaceInfo:
-    surfaceType: 0
+    surfaceType: 1
+    footstepSound: event:/sfx/steps/metal
+    landingSound: event:/sfx/jump action/land/metal
     isUnstable: 0
 --- !u!1 &1106491709
 GameObject:
@@ -1580,7 +1594,7 @@ Transform:
   m_GameObject: {fileID: 1196018560}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.9910197, y: 3.45, z: -2.5328498}
+  m_LocalPosition: {x: -7.5310197, y: 3.45, z: -2.5328498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1816,7 +1830,7 @@ GameObject:
   - component: {fileID: 1415790243}
   - component: {fileID: 1415790245}
   - component: {fileID: 1415790244}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1854,7 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1913,6 +1927,46 @@ Transform:
   - {fileID: 1866354552}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!21 &1504678469
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Default UI Material
+  m_Shader: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+  m_AllowLocking: 1
 --- !u!1 &1615449705
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,6 +1990,53 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1615449705}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1643551594
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643551596}
+  - component: {fileID: 1643551595}
+  m_Layer: 0
+  m_Name: LevelBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1643551595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643551594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06b8d734d28d4cf4da3dcfe51f3d77f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelBootstrap
+  playerSpawnPoint: {fileID: 0}
+  cinemachineCamera: {fileID: 1866354555}
+  mainCamera: {fileID: 1196018565}
+--- !u!4 &1643551596
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643551594}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2269,6 +2370,7 @@ GameObject:
   - component: {fileID: 1807360846}
   - component: {fileID: 1807360845}
   - component: {fileID: 1807360844}
+  - component: {fileID: 1807360849}
   m_Layer: 0
   m_Name: Caixa
   m_TagString: Hazard
@@ -2397,6 +2499,23 @@ Transform:
   - {fileID: 948997549}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1807360849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807360843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f32107723bf378e44a73ef480fc22515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SurfaceData
+  surfaceInfo:
+    surfaceType: 2
+    footstepSound: event:/sfx/steps/concrete
+    landingSound: event:/sfx/jump action/land/concrete
+    isUnstable: 0
 --- !u!1 &1823107731
 GameObject:
   m_ObjectHideFlags: 0
@@ -2539,7 +2658,7 @@ Transform:
   m_GameObject: {fileID: 1866354551}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.9910197, y: 3.45, z: -2.5328498}
+  m_LocalPosition: {x: -7.5310197, y: 3.45, z: -2.5328498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2685,7 +2804,7 @@ GameObject:
   - component: {fileID: 1936151576}
   - component: {fileID: 1936151578}
   - component: {fileID: 1936151577}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Cross
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2728,7 +2847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2957,7 +3076,8 @@ GameObject:
   - component: {fileID: 2042427813}
   - component: {fileID: 2042427814}
   - component: {fileID: 2042427815}
-  m_Layer: 8
+  - component: {fileID: 2042427816}
+  m_Layer: 5
   m_Name: CharacterWheel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3002,11 +3122,11 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -484891869
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &2042427815
@@ -3031,6 +3151,27 @@ MonoBehaviour:
   - type: 3
     highlight: {fileID: 190891661}
   player: {fileID: 600866815}
+--- !u!114 &2042427816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042427812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 039cb0dcf9d18d14f8fdc1bc6df35c83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WorldSpaceOverlayUI
+  desiredUIComparison: 8
+  uiElementsToApplyTo:
+  - {fileID: 879183782}
+  - {fileID: 1936151577}
+  - {fileID: 2118025671}
+  - {fileID: 1415790244}
+  - {fileID: 2094490135}
+  - {fileID: 190891661}
+  - {fileID: 983698091}
 --- !u!1 &2094490133
 GameObject:
   m_ObjectHideFlags: 0
@@ -3042,7 +3183,7 @@ GameObject:
   - component: {fileID: 2094490134}
   - component: {fileID: 2094490136}
   - component: {fileID: 2094490135}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Capybara
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3080,7 +3221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3117,7 +3258,7 @@ GameObject:
   - component: {fileID: 2118025670}
   - component: {fileID: 2118025672}
   - component: {fileID: 2118025671}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3155,7 +3296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 1504678469}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3384,18 +3525,19 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1643551596}
   - {fileID: 1497465767}
   - {fileID: 1823107732}
   - {fileID: 600866812}
   - {fileID: 1615449706}
   - {fileID: 410087041}
   - {fileID: 2134875651}
-  - {fileID: 1751022986}
-  - {fileID: 1807360848}
   - {fileID: 1773410265}
-  - {fileID: 512167350}
   - {fileID: 1934033782}
   - {fileID: 1829835176}
+  - {fileID: 1751022986}
+  - {fileID: 1807360848}
+  - {fileID: 512167350}
   - {fileID: 1758148815}
   - {fileID: 2126267419}
   - {fileID: 372279996}

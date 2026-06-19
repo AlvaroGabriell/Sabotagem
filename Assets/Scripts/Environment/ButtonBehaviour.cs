@@ -20,6 +20,7 @@ public class ButtonBehaviour : MonoBehaviour
             foreach (LaserBehaviour laser in linkedLasers)
             {
                 laser.Active = !laser.Active;
+                AudioManager.Instance.PlayOneShot(AudioEvents.SFX.PressurePlate.Press, gameObject.transform.position);
             }
         }
     }
@@ -32,6 +33,7 @@ public class ButtonBehaviour : MonoBehaviour
             foreach (LaserBehaviour laser in linkedLasers)
             {
                 laser.Active = !laser.Active;
+                AudioManager.Instance.PlayOneShot(AudioEvents.SFX.PressurePlate.Release, gameObject.transform.position);
             }
         }
     }

@@ -67,6 +67,7 @@ public class GameController : MonoBehaviour
     
         if(IsPaused) ResumeGame();
         UIController.Instance.CloseAllMenus();
+        AudioManager.Instance.StopAllAudio();
 
         if (LoadedLevel.IsValid() && LoadedLevel.isLoaded) yield return SceneManager.UnloadSceneAsync(LoadedLevel);
         LoadedLevel = default;
@@ -96,6 +97,8 @@ public class GameController : MonoBehaviour
         if(LoadedLevel.IsValid() && LoadedLevel.isLoaded) yield return SceneManager.UnloadSceneAsync(LoadedLevel);
 
         yield return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+
+        LoadedLevel = SceneManager.GetSceneByName(sceneName);
 
         IsLoading = false;
     }

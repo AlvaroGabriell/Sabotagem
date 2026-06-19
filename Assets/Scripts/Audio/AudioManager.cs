@@ -1,6 +1,7 @@
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class AudioManager : MonoBehaviour
     // -- FMOD VCAs ---------------------------------------------
     [SerializeField] private string musicVCAPath = "vca:/Music_VCA", sfxVCAPath = "vca:/SFX_VCA", masterVCAPath = "vca:/Master_VCA";
     private VCA masterVCA, musicVCA, sfxVCA;
+
+    // -- FMOD Buses --------------------------------------------
+    [SerializeField] private string musicBusPath = "bus:/MUSIC", sfxBusPath = "bus:/SFX";
+    private Bus musicBus, sfxBus;
 
     private void Awake()
     {
@@ -20,6 +25,9 @@ public class AudioManager : MonoBehaviour
             masterVCA = RuntimeManager.GetVCA(masterVCAPath);
             musicVCA = RuntimeManager.GetVCA(musicVCAPath);
             sfxVCA = RuntimeManager.GetVCA(sfxVCAPath);
+
+            musicBus = RuntimeManager.GetBus(musicBusPath);
+            sfxBus = RuntimeManager.GetBus(sfxBusPath);
 
         }
         else
@@ -56,6 +64,24 @@ public class AudioManager : MonoBehaviour
     {
         sfxVCA.setVolume(volume);
         PlayerPrefs.SetFloat("sfxVolume", volume);
+    }
+
+    // -- Bus Control -----------------------------------------
+
+    public void StopAllSFX(bool immediate = false)
+    {
+        sfxBus.stopAllEvents(immediate ? STOP_MODE.IMMEDIATE : STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public void StopAllMusic(bool immediate = false)
+    {
+        musicBus.stopAllEvents(immediate ? STOP_MODE.IMMEDIATE : STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public void StopAllAudio(bool immediate = false)
+    {
+        StopAllSFX(immediate);
+        StopAllMusic(immediate);
     }
 
     // -- Sound Player ---------------------------------------------

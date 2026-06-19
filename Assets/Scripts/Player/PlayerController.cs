@@ -15,8 +15,11 @@ public class PlayerController : LivingEntity
     public CharacterSelector CharacterSelector {get; private set;}
     public JumpController JumpController {get; private set;}
     private PlayerInput playerInput;
+
+    // -- Characters --------------------------------------------
     [SerializeField] private CharacterEntry[] characters;
     [SerializeField] private CharacterWheel characterWheel;
+    public bool IsCamouflaged { get; private set; } = false;
 
     // -- Ground Check ------------------------------------------
     private Transform groundCheck;
@@ -188,6 +191,22 @@ public class PlayerController : LivingEntity
             return true;
         }
         return false;
+    }
+
+    public void SetCamouflaged(bool value)
+    {
+        IsCamouflaged = value;
+
+        if(value)
+        {
+            PlaySfxFromPlayer(AudioEvents.SFX.Character.Camaleao.HabilidadeIn);
+            visualEffects.SetTransparent(0.40f);
+        }
+        else
+        {
+            PlaySfxFromPlayer(AudioEvents.SFX.Character.Camaleao.HabilidadeOut);
+            visualEffects.SetOpaque();
+        }
     }
 
     // -- Audio Helper ------------------------------------------

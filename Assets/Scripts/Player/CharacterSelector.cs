@@ -33,6 +33,8 @@ public class CharacterSelector
         if (modelParent.childCount > 0){
             Object.Destroy(modelParent.GetChild(0).gameObject);
             ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(owner.gameObject) + new Vector3(0, 0, -0.72f));
+            owner.PlaySfxFromPlayer(AudioEvents.SFX.Character.ChangeCharacter);
+            if(owner.IsCamouflaged) owner.SetCamouflaged(false);
         }
 
         Object.Instantiate(entry.prefab, modelParent);
@@ -54,7 +56,7 @@ public struct CharacterEntry
 {
     public CharacterType type;
     public GameObject prefab;
-    public string voiceSound;
+    [FMODAudioEvent] public string voiceSound;
 
     public static CharacterEntry Default => new()
     {

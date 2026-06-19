@@ -14,7 +14,6 @@ public class HealthSystem
 
     public LivingEntity Owner { get; private set; }
     private EntityAttributes attributes;
-    private DamageFlash damageFlash;
 
     private float regenTimer = 0f;
     
@@ -22,7 +21,6 @@ public class HealthSystem
     {
         Owner = owner;
         this.attributes = attributes;
-        damageFlash = new DamageFlash(owner);
         maxHealth = attributes.Get(AttributeType.maxHealth).FinalValue;
         health = maxHealth;
     }
@@ -64,7 +62,7 @@ public class HealthSystem
 
         health = Mathf.Max(health - damageEvent.damage, 0);
 
-        damageFlash.Flash();
+        Owner.visualEffects.FlashRed();
 
         if (ShouldDie() && canDie == true) Die(damageEvent.source, damageEvent.attacker);
     }

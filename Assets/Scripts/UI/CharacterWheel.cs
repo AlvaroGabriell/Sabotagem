@@ -41,8 +41,7 @@ public class CharacterWheel : MonoBehaviour
             UpdateHighlight();
         } else
         {
-            if(hoveredType != player.CharacterSelector.SelectedCharacter.type) ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(player.gameObject) + new Vector3(0, 0, -0.72f));
-            player.CharacterSelector.SetCharacter(hoveredType);
+            if(hoveredType != player.CharacterSelector.SelectedCharacter.type) player.CharacterSelector.SetCharacter(hoveredType);
         }
     }
 

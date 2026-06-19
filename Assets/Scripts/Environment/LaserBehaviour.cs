@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using UnityEngine;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -6,6 +7,7 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
 {
     [SerializeField] private float maxDistance = 50f;
     [SerializeField] private LayerMask hitMask;
+    private GameObject[] players;
 
     private LineRenderer lineRenderer;
     private CapsuleCollider capsuleCollider;
@@ -14,6 +16,7 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
     private float checkInterval = 0.05f; // 20x por segundo
     private float checkTimer = 0f;
 
+    private EventInstance laserSound = default;
     private bool _active = true;
     public bool Active
     {
@@ -23,6 +26,17 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
             _active = value;
             lineRenderer.enabled = value;
             capsuleCollider.enabled = value;
+
+            if (value)
+            {
+                laserSound = AudioManager.Instance.PlayInstancedSound(AudioEvents.SFX.Laser.LaserEvent, gameObject.transform.position);
+            } else
+            {
+                if(!laserSound.isValid()) return;
+                laserSound.stop(STOP_MODE.ALLOWFADEOUT);
+                laserSound.release();
+                laserSound = default;
+            }
         }
     }
 
@@ -32,9 +46,16 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
         capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
+    void Start()
+    {
+        laserSound = AudioManager.Instance.PlayInstancedSound(AudioEvents.SFX.Laser.LaserEvent, gameObject.transform.position);
+        players = GameObject.FindGameObjectsWithTag("Player");
+    }
+
     void Update()
     {
         if (!_active) return;
+        UpdateVolume();
 
         checkTimer -= Time.deltaTime;
         if (checkTimer > 0f) return;
@@ -78,6 +99,25 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
         capsuleCollider.direction = 2;
 
         transform.LookAt(end);
+    }
+
+    private void UpdateVolume()
+    {
+        float nearestDistance = float.MaxValue;
+
+        foreach(var player in players)
+        {
+            float distance = Vector3.Distance(
+                player.transform.position,
+                transform.position
+            );
+
+            nearestDistance = Mathf.Min(nearestDistance, distance);
+        }
+
+        float volume = Mathf.Clamp01(1f - nearestDistance / 14);
+        
+        laserSound.setVolume(volume);
     }
 
     public float GetDamage() => 1;

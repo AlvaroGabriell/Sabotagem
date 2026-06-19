@@ -99,21 +99,25 @@ public class UIController : MonoBehaviour
 
     public void OnPlay()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         OnSelectLevel("SampleScene");
     }
 
     public void OnSettings()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         OpenMenu(configMenu);
     }
 
     public void OnCredits()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         OpenMenu(creditsMenu);
     }
 
     public void OnSounds()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         OpenMenu(soundMenu);
     }
 
@@ -125,36 +129,41 @@ public class UIController : MonoBehaviour
     }
     public void OnResume()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         CloseCurrentMenu();
         GameController.Instance.ResumeGame();
         //if(Utils.TryGetPlayer(out GameObject player)) player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
     }
     public void OnQuit()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         Application.Quit();
     }
     public void OnRestart()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         GameController.Instance.ReloadCurrentLevel();
     }
     public void OnMainMenu()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         GameController.Instance.ReturnToMenu();
     }
     public void OnBack()
     {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         CloseCurrentMenu();
     }
 
     public void OnSelectLevel(string levelName)
     {
-        //SFXManager.Instance.PlaySFX("ui_click");
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         GameController.Instance.LoadLevel(levelName);
     }
 
     public void OnNextLevel()
     {
-        //SFXManager.Instance.PlaySFX("ui_click");
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         if(GameController.Instance.LoadedLevel.IsValid())
         {
             string currentLevelName = GameController.Instance.LoadedLevel.name;
