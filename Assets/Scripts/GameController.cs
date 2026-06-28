@@ -49,7 +49,6 @@ public class GameController : MonoBehaviour
     public void StartGame()
     {
         GameStarted = true;
-        //if(Utils.TryGetPlayer(out GameObject player)) player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
         //UIController.Instance.HUD.setActive(true);
     }
 

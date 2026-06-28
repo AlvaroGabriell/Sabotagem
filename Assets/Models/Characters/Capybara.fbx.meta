@@ -22,6 +22,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Lenco.001
+    second: {fileID: 2100000, guid: fc8c8e6f024328244a117e901621687f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Marrom
     second: {fileID: 2100000, guid: 15a6f386cf4e88b4c9da4d7b2bb0f057, type: 2}
   materials:
@@ -42,7 +47,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -99,11 +104,41 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton: []
+    skeleton:
+    - name: Capybara(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Corpo
+      parentName: Capybara(Clone)
+      position: {x: -0.0014780719, y: 1.5560658, z: 0.36197218}
+      rotation: {x: 0.70710665, y: -0.00044382174, z: -0.7071066, w: 0.00047764598}
+      scale: {x: 0.29141566, y: 0.29141566, z: 0.29141563}
+    - name: Cube
+      parentName: Capybara(Clone)
+      position: {x: -0.21092775, y: 1.6784141, z: 0.63497764}
+      rotation: {x: 0.43540847, y: 0.61844456, z: -0.44015366, w: -0.48395306}
+      scale: {x: 0.02020171, y: 0.056216616, z: 0.009879406}
+    - name: Cube.001
+      parentName: Capybara(Clone)
+      position: {x: 0.052593287, y: 1.5648713, z: 0.946866}
+      rotation: {x: -0.064275585, y: 0.0028975774, z: -0.24062163, w: 0.96848416}
+      scale: {x: 0.011821764, y: 0.022369517, z: 0.003006488}
+    - name: Cube.002
+      parentName: Capybara(Clone)
+      position: {x: -0, y: 1.1974242, z: 0.7014842}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.045209873, y: 0.045209873, z: 0.045209873}
+    - name: Orelhas
+      parentName: Capybara(Clone)
+      position: {x: 0.16627291, y: 1.7784936, z: 0.31726176}
+      rotation: {x: 0.4388166, y: 0.444931, z: -0.55583686, w: 0.5481987}
+      scale: {x: 0.13561052, y: 0.13561052, z: 0.1356105}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -114,13 +149,13 @@ ModelImporter:
     globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
-    hasExtraRoot: 0
+    hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

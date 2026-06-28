@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class UIController : MonoBehaviour
 
     // -- References ----------------------------------------
     public GameObject background, mainMenu, pauseMenu, configMenu, soundMenu, levelWonMenu, gameWonMenu, gameLostMenu, creditsMenu;
+    public GameObject inputAssignmentMenu;
 
     private readonly Stack<GameObject> menuStack = new();
 
@@ -86,11 +88,11 @@ public class UIController : MonoBehaviour
             // Se estiver no menu de pausa, resume o jogo
             OnResume();
         }
-        else if (configMenu.activeSelf || soundMenu.activeSelf || creditsMenu.activeSelf)
+        else if (configMenu.activeSelf || soundMenu.activeSelf || creditsMenu.activeSelf || inputAssignmentMenu.activeSelf)
         {
             OnBack();
         }
-        else
+        else if (GameController.Instance.GameStarted && !GameController.Instance.IsPaused)
         {
             // Se estiver no jogo normal, pausa o jogo
             OnPause();
@@ -100,7 +102,14 @@ public class UIController : MonoBehaviour
     public void OnPlay()
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
-        OnSelectLevel("SampleScene");
+        if (!InputAssignmentManager.Instance.AreAllPlayersAssigned())
+        {
+            OpenMenu(inputAssignmentMenu);
+        }
+        else
+        {
+            OnSelectLevel("SampleScene");
+        }
     }
 
     public void OnSettings()
@@ -125,14 +134,26 @@ public class UIController : MonoBehaviour
     {
         OpenMenu(pauseMenu);
         GameController.Instance.PauseGame();
-        //if(Utils.TryGetPlayer(out GameObject player)) player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Disable();
+        if(Utils.TryGetPlayers(out GameObject[] players))
+        {
+            foreach (var player in players)
+            {
+                player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Disable();
+            }
+        }
     }
     public void OnResume()
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         CloseCurrentMenu();
         GameController.Instance.ResumeGame();
-        //if(Utils.TryGetPlayer(out GameObject player)) player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
+        if(Utils.TryGetPlayers(out GameObject[] players))
+        {
+            foreach (var player in players)
+            {
+                player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
+            }
+        }
     }
     public void OnQuit()
     {

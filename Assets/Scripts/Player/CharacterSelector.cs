@@ -10,15 +10,12 @@ public class CharacterSelector
     public readonly PlayerController owner;
     public CharacterEntry SelectedCharacter {get; private set;}
 
-    private readonly Transform modelParent;
-
     public CharacterEntry[] characters;
 
     public CharacterSelector(PlayerController owner, CharacterEntry[] characters)
     {
         this.owner = owner;
         this.characters = characters;
-        modelParent = owner.transform.Find("Model");
         SelectedCharacter = GetCharacterEntry(CharacterType.Capybara);
     }
 
@@ -30,14 +27,18 @@ public class CharacterSelector
 
         SelectedCharacter = entry;
 
-        if (modelParent.childCount > 0){
-            Object.Destroy(modelParent.GetChild(0).gameObject);
-            ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(owner.gameObject) + new Vector3(0, 0, -0.72f));
+        if (owner.ModelParent.childCount > 0){
+            Object.Destroy(owner.ModelParent.GetChild(0).gameObject);
+            var (center, radius) = Utils.GetVisualBounds(owner.gameObject);
+            ParticleManager.Instance.SpawnParticle("clouds", center + new Vector3(0, 0, -0.72f), radius);
             owner.PlaySfxFromPlayer(AudioEvents.SFX.Character.ChangeCharacter);
             if(owner.IsCamouflaged) owner.SetCamouflaged(false);
         }
 
-        Object.Instantiate(entry.prefab, modelParent);
+        Object.Instantiate(entry.prefab, owner.ModelParent);
+        owner.Animator.avatar = entry.prefab.GetComponent<Animator>().avatar;
+        owner.Animator.Rebind();
+        owner.Animator.Update(0f);
     }
 
     private CharacterEntry GetCharacterEntry(CharacterType type)

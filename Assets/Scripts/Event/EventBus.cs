@@ -4,8 +4,6 @@ using System.Reflection;
 
 public static class EventBus<T>
 {
-    // TODO: criar um SubscribeEvent e EventBusSubscriber pra facilitar a inscrição de listeners e tals.
-
     private static readonly List<EventListener<T>> listeners = new();
 
     // Método pra inscrever um listener para um evento do tipo T, com prioridade opcional.

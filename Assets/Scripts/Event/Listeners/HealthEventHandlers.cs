@@ -8,7 +8,8 @@ public class HealthEventHandlers
     {
         if(evt.target is not PlayerController player) return;
 
-        ParticleManager.Instance.SpawnParticle("clouds", Utils.GetVisualCenter(player.gameObject) + new Vector3(0, 0, -0.72f));
+        var (center, radius) = Utils.GetVisualBounds(player.gameObject);
+        ParticleManager.Instance.SpawnParticle("clouds", center + new Vector3(0, 0, -0.72f), radius);
         player.transform.position = player.LastSafePos;
         player.Rb.linearVelocity = Vector3.zero;
 

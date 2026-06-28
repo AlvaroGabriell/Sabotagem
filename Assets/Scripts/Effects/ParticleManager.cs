@@ -21,7 +21,7 @@ public class ParticleManager : MonoBehaviour
         return library.TryGet(key, out _);
     }
 
-    public void SpawnParticle(string key, Vector3 pos)
+    public void SpawnParticle(string key, Vector3 pos, float radius = 1f)
     {
         if(!library.TryGet(key, out ParticleSystem prefab))
         {
@@ -30,6 +30,10 @@ public class ParticleManager : MonoBehaviour
         }
 
         ParticleSystem particle = Instantiate(prefab, pos, Quaternion.identity);
+
+        float scale = radius / 0.7f;
+        var shape = particle.shape;
+        shape.scale = new Vector3(0.3f * scale, 0.8f, 0.3f * scale) ;
 
         Destroy(particle.gameObject, particle.main.duration + particle.main.startLifetime.constantMax);
     }

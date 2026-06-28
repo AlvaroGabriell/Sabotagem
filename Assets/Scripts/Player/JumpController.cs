@@ -9,6 +9,8 @@ public class JumpController
     private readonly float coyoteTime;
     private readonly float jumpBufferTime;
 
+    private static readonly int JumpHash = Animator.StringToHash("jump");
+
     // -- Estado interno ---------------------------
     public enum JumpState { Grounded, Rising, Falling }
     public JumpState State {get; private set;} = JumpState.Grounded;
@@ -141,6 +143,7 @@ public class JumpController
         owner.Rb.linearVelocity = new Vector3(owner.Rb.linearVelocity.x, 0f, owner.Rb.linearVelocity.z);
         owner.Rb.AddForce(Vector3.up * force, ForceMode.Impulse);
 
+        owner.Animator.SetTrigger(JumpHash);
         owner.PlaySfxFromPlayer(AudioEvents.SFX.JumpAction.Jump);
     }
 }

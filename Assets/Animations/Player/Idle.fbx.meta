@@ -1,39 +1,9 @@
 fileFormatVersion: 2
-guid: 10685e4dc9ea95c4db7a587f83a082f6
+guid: 49e3690a1b6e2e94ba0cf64ffba924cd
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: CorpoCoelho
-    second: {fileID: 2100000, guid: 1d5b180159b29464f8943ce22fa07851, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Lenco
-    second: {fileID: 2100000, guid: 9aaeff4c22c41e345a4b2bc92a374cc8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 342fa0d13edf2a9498aa09088921c948, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: NarizCoelho
-    second: {fileID: 2100000, guid: c5dbea038d1123a4bb90b7662812a7de, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: OrelhaCoelhoRosa
-    second: {fileID: 2100000, guid: 6f2d0fadbcf5b144da099989d5644448, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: brancoCoelho
-    second: {fileID: 2100000, guid: f24031994c90d574ba2f04bde349a16b, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -52,14 +22,43 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Armature|mixamo.com
+      takeName: Armature|mixamo.com
+      internalID: -4572650651892053679
+      firstFrame: 0
+      lastFrame: 88
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 0
   meshes:
     lODScreenPercentages: []
@@ -109,46 +108,41 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []
     skeleton:
-    - name: Rabbit(Clone)
+    - name: Capybara(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Corpo
-      parentName: Rabbit(Clone)
+      parentName: Capybara(Clone)
       position: {x: -0.0014780719, y: 1.5560658, z: 0.36197218}
       rotation: {x: 0.70710665, y: -0.00044382174, z: -0.7071066, w: 0.00047764598}
       scale: {x: 0.29141566, y: 0.29141566, z: 0.29141563}
     - name: Cube
-      parentName: Rabbit(Clone)
-      position: {x: 0.10759103, y: 1.635634, z: 0.659588}
-      rotation: {x: -0.20776837, y: 0.06593056, z: -0.02696169, w: 0.97558117}
-      scale: {x: 0.021102335, y: 0.031377107, z: 0.010197447}
+      parentName: Capybara(Clone)
+      position: {x: -0.21092775, y: 1.6784141, z: 0.63497764}
+      rotation: {x: 0.43540847, y: 0.61844456, z: -0.44015366, w: -0.48395306}
+      scale: {x: 0.02020171, y: 0.056216616, z: 0.009879406}
     - name: Cube.001
-      parentName: Rabbit(Clone)
-      position: {x: -0.009331476, y: 1.5470332, z: 0.75550216}
-      rotation: {x: -0.2077683, y: 0.06593054, z: -0.026961682, w: 0.97558117}
-      scale: {x: 0.02371666, y: 0.025664445, z: 0.010942918}
+      parentName: Capybara(Clone)
+      position: {x: 0.052593287, y: 1.5648713, z: 0.946866}
+      rotation: {x: -0.064275585, y: 0.0028975774, z: -0.24062163, w: 0.96848416}
+      scale: {x: 0.011821764, y: 0.022369517, z: 0.003006488}
     - name: Cube.002
-      parentName: Rabbit(Clone)
-      position: {x: -0, y: 1.1974242, z: 0.67088604}
-      rotation: {x: -0.011251291, y: 0.028387839, z: -0.025806729, w: 0.99920046}
-      scale: {x: 0.045208484, y: 0.045202713, z: 0.042988025}
-    - name: Cube.004
-      parentName: Rabbit(Clone)
-      position: {x: -0, y: 0.586467, z: -0.13441555}
-      rotation: {x: -0.1415116, y: -0.04191033, z: -0.015873099, w: 0.98892164}
-      scale: {x: 0.109302826, y: 0.10930284, z: 0.109302826}
+      parentName: Capybara(Clone)
+      position: {x: -0, y: 1.1974242, z: 0.7014842}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 0.045209873, y: 0.045209873, z: 0.045209873}
     - name: Orelhas
-      parentName: Rabbit(Clone)
-      position: {x: 0.12929052, y: 1.8235136, z: 0.3840564}
-      rotation: {x: 0.6546511, y: 0.089147314, z: -0.40037236, w: 0.63496983}
-      scale: {x: 0.13561052, y: 0.1356105, z: 0.1356105}
+      parentName: Capybara(Clone)
+      position: {x: 0.16627291, y: 1.7784936, z: 0.31726176}
+      rotation: {x: 0.4388166, y: 0.444931, z: -0.55583686, w: 0.5481987}
+      scale: {x: 0.13561052, y: 0.13561052, z: 0.1356105}
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -161,11 +155,11 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 1
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: a51b6d2f502ed324f85b328fe1a05386, type: 3}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 2
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   importBlendShapeDeformPercent: 1
   remapMaterialsIfMaterialImportModeIsNone: 0

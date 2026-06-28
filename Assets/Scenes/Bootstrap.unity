@@ -181,6 +181,50 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: e1acf6913990a67488549ba51a2293be, type: 2}
+--- !u!1 &600343905
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600343907}
+  - component: {fileID: 600343906}
+  m_Layer: 0
+  m_Name: InputAssignmentManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &600343906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600343905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f73918349298d64b893dad36a78ee03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputAssignmentManager
+--- !u!4 &600343907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 600343905}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &676187005
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,12 +254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6593e3bb5cef2884ea45a860c21294a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  sfxLib: {fileID: 11400000, guid: ee86b0943d0003c4497e07c2d2ffe9b9, type: 2}
-  musicLib: {fileID: 11400000, guid: c769ccd429a20a6499ddfba38f1ea534, type: 2}
-  ambienceLib: {fileID: 11400000, guid: a0c98d8140f6a6f46872e2c3735f7b6f, type: 2}
   musicVCAPath: vca:/MUSIC
   sfxVCAPath: vca:/SFX
   masterVCAPath: vca:/MASTER
+  musicBusPath: bus:/MUSIC
+  sfxBusPath: bus:/SFX
 --- !u!4 &676187007
 Transform:
   m_ObjectHideFlags: 0
@@ -374,3 +417,4 @@ SceneRoots:
   - {fileID: 1523263331}
   - {fileID: 676187007}
   - {fileID: 2133295786}
+  - {fileID: 600343907}

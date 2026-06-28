@@ -1,20 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerInput))]
+
+[RequireComponent(typeof(Animator))]
 
 /// <summary>
 /// Script principal do player.
 /// Todos os componentes do player são instanciados através desse script, portanto outros scripts
 /// que quiserem referenciar tais componentes podem acessá-los por esse script.
 /// </summary>
-public class PlayerController : LivingEntity
+public class PlayerController : LivingEntity, IJumpableSurface
 {
     // --  Components & References ------------------------------
     public CharacterSelector CharacterSelector {get; private set;}
     public JumpController JumpController {get; private set;}
-    private PlayerInput playerInput;
+    public Transform ModelParent {get; private set;}
+    public PlayerInput PlayerInput {get; private set;}
 
     // -- Characters --------------------------------------------
     [SerializeField] private CharacterEntry[] characters;
@@ -36,6 +38,13 @@ public class PlayerController : LivingEntity
     public Vector2 MoveInput {get; private set;}
     public bool IsJumping => JumpController.IsJumping;
 
+    // -- Animation ---------------------------------------------
+    public Animator Animator {get; private set;}
+    private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
+    private static readonly int MoveSpeedHash = Animator.StringToHash("moveSpeed");
+
+    [SerializeField] private float turnSpeed = 720f;
+
     // -- Audio -------------------------------------------------
     private float stepInterval = 0.5f;
     private float stepTimer;
@@ -54,12 +63,13 @@ public class PlayerController : LivingEntity
         Attributes.Get(AttributeType.moveSpeed).SetBaseValue(3f);
         
         groundCheck = gameObject.transform.Find("GroundCheck");
+        ModelParent = gameObject.transform.Find("Model");
         CharacterSelector = new(this, characters);
         JumpController = new(this);
-        playerInput = GetComponent<PlayerInput>();
-        //animator = GetComponent<Animator>();
+        PlayerInput = GetComponent<PlayerInput>();
+        Animator = GetComponent<Animator>();
 
-        playerInput.neverAutoSwitchControlSchemes = true;
+        PlayerInput.neverAutoSwitchControlSchemes = true;
     }
     
     void Update()
@@ -74,6 +84,7 @@ public class PlayerController : LivingEntity
     void FixedUpdate()
     {
         HandleMovement();
+        UpdateRotation();
     }
 
     void UpdateValues()
@@ -81,8 +92,8 @@ public class PlayerController : LivingEntity
         bool isMoving = MoveInput.x != 0f;
 
         // -- Animator ----------------------
-        //animator.SetBool("isMoving", isMoving);
-        //animator.SetFloat("moveSpeed", attributes.moveSpeed.FinalValue / 3);
+        Animator.SetBool(IsMovingHash, isMoving);
+        Animator.SetFloat(MoveSpeedHash, Attributes.Get(AttributeType.moveSpeed).FinalValue / 3);
 
         // -- Audio -------------------------
         if(isMoving && IsGrounded())
@@ -106,6 +117,15 @@ public class PlayerController : LivingEntity
         Rb.linearVelocity = new Vector3(MoveInput.x * speed, Rb.linearVelocity.y, MoveInput.y * speed);
     }
 
+    private void UpdateRotation()
+    {
+        if (Mathf.Abs(MoveInput.x) < 0.01f) return;
+
+        Quaternion targetRotation = MoveInput.x > 0 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 0);
+
+        ModelParent.rotation = Quaternion.RotateTowards(ModelParent.rotation, targetRotation, turnSpeed * Time.deltaTime);
+    }
+
     /// <summary>
     /// Retorna se o player está pisando em alguma superfície que implemente a interface IJumpable.
     /// Pode retornar false mesmo se o player estiver pisando em uma superfície, caso essa superfície não implemente a interface IJumpable.
@@ -117,8 +137,8 @@ public class PlayerController : LivingEntity
 
         for(int i = 0; i < count; i++)
         {
+            if(groundHits[i].gameObject == gameObject) continue;
             if(groundHits[i].TryGetComponent(out IJumpableSurface _)) return true;
-            
         }
 
         return false;
@@ -159,7 +179,8 @@ public class PlayerController : LivingEntity
 
     public bool IsSafeFromDanger()
     {
-        return !Physics.CheckSphere(Utils.GetVisualCenter(gameObject), 3f, dangerLayer, QueryTriggerInteraction.Collide);
+        var (center, _) = Utils.GetVisualBounds(gameObject);
+        return !Physics.CheckSphere(center, 3f, dangerLayer, QueryTriggerInteraction.Collide);
     }
 
     /// <summary>
@@ -224,6 +245,7 @@ public class PlayerController : LivingEntity
 
     public void OnMove(InputAction.CallbackContext context)
     {
+        if(characterWheel.IsOpen) return;
         MoveInput = context.ReadValue<Vector2>();
     }
 
@@ -279,7 +301,8 @@ public class PlayerController : LivingEntity
 
         // Danger Safety Check
         Gizmos.color = IsSafeFromDanger() ? Color.green : Color.red;
-        Gizmos.DrawWireSphere(Utils.GetVisualCenter(gameObject), 3f);
+        var (visualCenter, _) = Utils.GetVisualBounds(gameObject);
+        Gizmos.DrawWireSphere(visualCenter, 3f);
 
         // HasEnoughGround debug
         float radius = 0.3f;
