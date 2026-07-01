@@ -89,6 +89,8 @@ public class InputAssignmentManager : MonoBehaviour
             waitingForPlayer1 = false;
             waitingForPlayer2 = true;
 
+            eventPtr.handled = true;
+
             EventBus<InputEvents.PlayerAssignedEvent>.Publish(new InputEvents.PlayerAssignedEvent
             {
                 playerIndex = 1,

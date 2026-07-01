@@ -62,7 +62,7 @@ public class LaserBehaviour : MonoBehaviour, IDamageSource
         checkTimer = checkInterval;
 
         Vector3 currentPos = transform.position;
-        Vector3 currentDir = transform.parent.forward;
+        Vector3 currentDir = transform.parent.forward * -1;
         
         // Checa hit atual pra ver se algo passou na frente do laser
         Vector3 start = currentPos;

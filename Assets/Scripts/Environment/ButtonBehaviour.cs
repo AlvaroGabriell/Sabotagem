@@ -1,17 +1,11 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Collider))]
 public class ButtonBehaviour : MonoBehaviour
 {
     [SerializeField] private LaserBehaviour[] linkedLasers;
-    BoxCollider boxCollider;
 
     private int overlapCount = 0;
-
-    void Awake()
-    {
-        boxCollider = GetComponent<BoxCollider>();
-    }
 
     void OnTriggerEnter(Collider other)
     {

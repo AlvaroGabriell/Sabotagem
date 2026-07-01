@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ModelVisualEffects
 {
+    private static readonly WaitForSeconds _waitForSeconds0_15 = new(0.15f);
     private readonly MonoBehaviour owner;
     private readonly Dictionary<Material, MaterialState> flashState = new();
     private Coroutine flashCoroutine;
@@ -77,7 +78,7 @@ public class ModelVisualEffects
     {
         SaveCurrentState();
         SetColor(new Color(1, 0.2745098f, 0.2745098f));
-        yield return new WaitForSeconds(0.15f);
+        yield return _waitForSeconds0_15;
         RestoreSavedtate();
         flashCoroutine = null;
     }

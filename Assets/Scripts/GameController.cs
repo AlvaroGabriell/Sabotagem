@@ -116,6 +116,13 @@ public class GameController : MonoBehaviour
         //UIController.Instance.HUD.setActiveScreenHUD(true);
     }
 
+    public int GetCurrentLevelNumber()
+    {
+        string name = LoadedLevel.name;
+        if (!int.TryParse(name.Split('_')[1], out int number)) return -1;
+        return number;
+    }
+
     public bool IsFirstLevel()
     {
         string name = LoadedLevel.name;

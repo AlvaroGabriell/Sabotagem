@@ -45,6 +45,9 @@ public class PlayerController : LivingEntity, IJumpableSurface
 
     [SerializeField] private float turnSpeed = 720f;
 
+    // -- Interactable ------------------------------------------
+    public IInteractable CurrentInteractable { get; set; } = null;
+
     // -- Audio -------------------------------------------------
     private float stepInterval = 0.5f;
     private float stepTimer;
@@ -121,7 +124,7 @@ public class PlayerController : LivingEntity, IJumpableSurface
     {
         if (Mathf.Abs(MoveInput.x) < 0.01f) return;
 
-        Quaternion targetRotation = MoveInput.x > 0 ? Quaternion.Euler(0, 90, 0) : Quaternion.Euler(0, -90, 0);
+        Quaternion targetRotation = MoveInput.x > 0 ? Quaternion.Euler(0, 91, 0) : Quaternion.Euler(0, -90, 0);
 
         ModelParent.rotation = Quaternion.RotateTowards(ModelParent.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
@@ -254,11 +257,6 @@ public class PlayerController : LivingEntity, IJumpableSurface
         if (context.started && !characterWheel.IsOpen) JumpController.OnJumpPressed();
     }
 
-    //public void OnCrouch(InputAction.CallbackContext context)
-    //{
-    //    
-    //}
-
     public void OnSwitchAnimal(InputAction.CallbackContext context)
     {
         if (context.started) characterWheel.Toggle();
@@ -271,7 +269,11 @@ public class PlayerController : LivingEntity, IJumpableSurface
 
     public void OnSkill(InputAction.CallbackContext context)
     {
-        if (context.started) SkillHelper.HandleSkill(this);
+        if (context.started)
+        {
+            if(CurrentInteractable != null) CurrentInteractable.Interact(this);
+            else SkillHelper.HandleSkill(this);
+        }
     }
 
     public void OnTalk(InputAction.CallbackContext context)

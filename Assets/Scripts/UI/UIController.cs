@@ -1,16 +1,22 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class UIController : MonoBehaviour
 {
     public static UIController Instance { get; private set; }
-    //public HUDController HUD;
+    public HUDController HUD;
+    public LoadingScreenUI LoadingScreen;
+
     public GameObject UICamera;
 
-    // -- References ----------------------------------------
-    public GameObject background, mainMenu, pauseMenu, configMenu, soundMenu, levelWonMenu, gameWonMenu, gameLostMenu, creditsMenu;
+    // -- Menus and Screens ----------------------------------------
+    public GameObject background, mainMenu, levelSelectMenu, pauseMenu, configMenu, controlsMenu, soundMenu, levelWonMenu, gameWonMenu, gameLostMenu, creditsMenu;
     public GameObject inputAssignmentMenu;
+
+    // -- Level Won Menu -------------------------------------------
+    public TextMeshProUGUI levelWonTimeText;
 
     private readonly Stack<GameObject> menuStack = new();
 
@@ -41,8 +47,8 @@ public class UIController : MonoBehaviour
         GlobalVolume.Instance.EnableDOF();
         menuStack.Push(menu);
 
-        bool noLevel = GameController.Instance.LoadedLevel == null;
-        bool isOverlayMenu = menu == configMenu || menu == soundMenu || menu == creditsMenu;
+        bool noLevel = GameController.Instance.LoadedLevel == default || !GameController.Instance.LoadedLevel.IsValid();
+        bool isOverlayMenu = menu == configMenu || menu == levelSelectMenu || menu == soundMenu || menu == creditsMenu || menu == inputAssignmentMenu;
         
         if (noLevel && isOverlayMenu) background.SetActive(true);
     }
@@ -78,38 +84,28 @@ public class UIController : MonoBehaviour
 
     public void HandleEscape()
     {
-        if (mainMenu.activeSelf || levelWonMenu.activeSelf || gameWonMenu.activeSelf || gameLostMenu.activeSelf)
+        if (GameController.Instance.GameStarted && !GameController.Instance.IsPaused)
         {
-            // Se estiver em um desses menus, não faz nada
-            return;
+            // Se estiver no jogo normal, pausa o jogo
+            OnPause();
         }
         else if (pauseMenu.activeSelf)
         {
             // Se estiver no menu de pausa, resume o jogo
             OnResume();
         }
-        else if (configMenu.activeSelf || soundMenu.activeSelf || creditsMenu.activeSelf || inputAssignmentMenu.activeSelf)
+        else if (configMenu.activeSelf || soundMenu.activeSelf || creditsMenu.activeSelf || levelSelectMenu.activeSelf || controlsMenu.activeSelf)
         {
             OnBack();
-        }
-        else if (GameController.Instance.GameStarted && !GameController.Instance.IsPaused)
-        {
-            // Se estiver no jogo normal, pausa o jogo
-            OnPause();
         }
     }
 
     public void OnPlay()
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
-        if (!InputAssignmentManager.Instance.AreAllPlayersAssigned())
-        {
-            OpenMenu(inputAssignmentMenu);
-        }
-        else
-        {
-            OnSelectLevel("SampleScene");
-        }
+
+        OpenMenu(levelSelectMenu);
+        if (!InputAssignmentManager.Instance.AreAllPlayersAssigned()) OpenMenu(inputAssignmentMenu);
     }
 
     public void OnSettings()
@@ -122,6 +118,14 @@ public class UIController : MonoBehaviour
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
         OpenMenu(creditsMenu);
+    }
+    
+    public void OnControls()
+    {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
+
+        OpenMenu(controlsMenu);
+        if (!InputAssignmentManager.Instance.AreAllPlayersAssigned()) OpenMenu(inputAssignmentMenu);
     }
 
     public void OnSounds()
@@ -179,6 +183,7 @@ public class UIController : MonoBehaviour
     public void OnSelectLevel(string levelName)
     {
         AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
+        LoadingScreen.StartLoadingScreen(LoadingScreenUI.GetLevelNameFromSceneName(levelName));
         GameController.Instance.LoadLevel(levelName);
     }
 
@@ -198,5 +203,11 @@ public class UIController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OnClearProgress()
+    {
+        AudioManager.Instance.PlayOneShot(AudioEvents.SFX.Menu.Click, Vector3.zero);
+        LevelProgress.ClearProgress();
     }
 }

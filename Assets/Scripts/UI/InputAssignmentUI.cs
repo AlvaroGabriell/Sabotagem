@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 [EventBusSubscriber]
 public class InputAssignmentUI : MonoBehaviour
@@ -10,8 +12,11 @@ public class InputAssignmentUI : MonoBehaviour
 
     private void OnEnable()
     {
-        EventBus<InputEvents.PlayerAssignedEvent>.Subscribe(HandlePlayerAssigned);
-        EventBus<InputEvents.AssignmentCompleteEvent>.Subscribe(HandleAssignmentComplete);
+        if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var uiModule)){
+            uiModule.actionsAsset.FindActionMap("UI").FindAction("Submit").Disable(); // Desativa a ação de Submit para evitar interferência na atribuição de controles
+        }
+        EventBus<InputEvents.PlayerAssignedEvent>.Subscribe(OnPlayerAssigned);
+        EventBus<InputEvents.AssignmentCompleteEvent>.Subscribe(OnAssignmentComplete);
 
         InputAssignmentManager.Instance.ResetAssignments();
         UpdateUI();
@@ -19,8 +24,9 @@ public class InputAssignmentUI : MonoBehaviour
 
     void OnDisable()
     {
-        EventBus<InputEvents.PlayerAssignedEvent>.Unsubscribe(HandlePlayerAssigned);
-        EventBus<InputEvents.AssignmentCompleteEvent>.Unsubscribe(HandleAssignmentComplete);
+        EventBus<InputEvents.PlayerAssignedEvent>.Unsubscribe(OnPlayerAssigned);
+        EventBus<InputEvents.AssignmentCompleteEvent>.Unsubscribe(OnAssignmentComplete);
+        //if (EventSystem.current.TryGetComponent<InputSystemUIInputModule>(out var uiModule));
     }
 
     private void UpdateUI()
@@ -55,22 +61,17 @@ public class InputAssignmentUI : MonoBehaviour
         // TODO: fazer pro p2
     }
 
-    private void HandlePlayerAssigned(InputEvents.PlayerAssignedEvent evt)
+    private void OnPlayerAssigned(InputEvents.PlayerAssignedEvent evt)
     {
         // Um jogador atribuiu seu controle: atualiza UI para o próximo
         UpdateUI();
     }
 
-    private void HandleAssignmentComplete(InputEvents.AssignmentCompleteEvent evt)
+    private void OnAssignmentComplete(InputEvents.AssignmentCompleteEvent evt)
     {
         // Ambos jogadores atribuíram: fecha tela e avança
-        // TODO: fechar a tela de forma correta.
         UpdateUI();
-        gameObject.SetActive(false);
-
-        // Chama o próximo passo no GameController/UIController
-        // Por exemplo, abre a seleção de nível:
-        UIController.Instance.OnSelectLevel("SampleScene");
-        //UIController.Instance.OpenMenu(UIController.Instance.levelSelectMenu);
+        UIController.Instance.CloseCurrentMenu();
+        // Chama o próximo passo no UIController
     }
 }
